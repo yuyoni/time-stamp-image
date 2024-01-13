@@ -35,6 +35,16 @@ export default function UploadBox() {
   const handleUpload = (e) => {
     const file = e.target.files[0];
     setFileInfo(file);
+
+    // FileReader를 사용하여 이미지 미리보기를 생성
+    const reader = new FileReader();
+    reader.onload = () => {
+      setUploadedInfo((prevInfo) => ({
+        ...prevInfo,
+        preview: reader.result,
+      }));
+    };
+    reader.readAsDataURL(file);
   };
 
   return (
@@ -53,7 +63,13 @@ export default function UploadBox() {
           onChange={handleUpload}
         />
         {uploadedInfo ? (
-          <>{uploadedInfo.name}</>
+          <>
+            <img
+              className="preview-img"
+              src={uploadedInfo.preview}
+              alt={uploadedInfo.name}
+            />
+          </>
         ) : (
           <>
             <img className="img-icon" src={imgfile} alt="img-icon" />
@@ -106,6 +122,11 @@ const Wrapper = styled.div`
   .preview.active {
     background-color: #efeef3;
     border-color: #111;
+  }
+
+  .preview-img {
+    max-width: 130%;
+    max-height: 130%;
   }
 
   .preview_msg {
