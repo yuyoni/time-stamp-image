@@ -46,7 +46,12 @@ export default function UploadBox() {
         onDragLeave={handleDragEnd}
         onDrop={handleDrop}
       >
-        <input type="file" className="file" onChange={handleUpload} />
+        <input
+          type="file"
+          accept="image/*"
+          className="file"
+          onChange={handleUpload}
+        />
         {uploadedInfo ? (
           <>{uploadedInfo.name}</>
         ) : (
