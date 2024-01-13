@@ -1,5 +1,3 @@
-// GlobalStyle.js 파일
-
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
