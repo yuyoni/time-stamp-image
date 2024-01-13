@@ -1,10 +1,19 @@
 import styled from "styled-components";
 import imgfile from "../assets/imgfile.png";
+import { useState } from "react";
 
 export default function UploadBox() {
+  const [isActive, setActive] = useState(false);
+  const handleDragStart = () => setActive(true);
+  const handleDragEnd = () => setActive(false);
+
   return (
     <Wrapper>
-      <label className="preview">
+      <label
+        className={`preview${isActive ? " active" : ""}`} // isActive 값에 따라 className 제어
+        onDragEnter={handleDragStart} // dragstart 핸들러 추가
+        onDragLeave={handleDragEnd} // dragend 핸들러 추가
+      >
         <input type="file" className="file" />
         <img className="img-icon" src={imgfile} alt="img-icon" />
         <p className="preview_msg">클릭 혹은 파일을 이곳에 드롭하세요.</p>
@@ -48,6 +57,11 @@ const Wrapper = styled.div`
   }
 
   .preview:hover {
+    border-color: #111;
+  }
+
+  .preview.active {
+    background-color: #efeef3;
     border-color: #111;
   }
 
