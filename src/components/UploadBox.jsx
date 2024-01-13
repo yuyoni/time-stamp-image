@@ -82,7 +82,8 @@ export default function UploadBox() {
     // a 태그를 생성하고 다운로드 링크로 사용
     const a = document.createElement("a");
     a.href = dataURL;
-    a.download = `${uploadedInfo.name}_time`; // 파일명
+    const renamedFile = uploadedInfo.name.split(".")[0] + "_time";
+    a.download = renamedFile; // 파일명
     a.click();
   };
 
