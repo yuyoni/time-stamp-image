@@ -75,7 +75,6 @@ export default function UploadBox() {
 
   return (
     <Wrapper>
-      {uploadedInfo && formatTimestamp(uploadedInfo.lastModified)}
       <label
         className={`preview${isActive ? " active" : ""}`} // isActive 값에 따라 className 제어
         onDragEnter={handleDragStart}
