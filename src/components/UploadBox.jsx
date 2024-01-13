@@ -1,6 +1,7 @@
+import { useState } from "react";
 import styled from "styled-components";
 import imgfile from "../assets/imgfile.png";
-import { useState } from "react";
+import formatTimestamp from "../utils/formatTimestamp";
 
 export default function UploadBox() {
   const [isActive, setActive] = useState(false);
@@ -49,6 +50,7 @@ export default function UploadBox() {
 
   return (
     <Wrapper>
+      {uploadedInfo && formatTimestamp(uploadedInfo.lastModified)}
       <label
         className={`preview${isActive ? " active" : ""}`} // isActive 값에 따라 className 제어
         onDragEnter={handleDragStart}
@@ -73,7 +75,7 @@ export default function UploadBox() {
         ) : (
           <>
             <img className="img-icon" src={imgfile} alt="img-icon" />
-            <p className="preview_msg">클릭 혹은 파일을 이곳에 드롭하세요.</p>
+            <p className="preview_msg">Click or Drop Image</p>
           </>
         )}
       </label>
@@ -85,9 +87,10 @@ const Wrapper = styled.div`
   .file {
     display: none;
   }
+
   .img-icon {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 150px;
     pointer-events: none;
   }
 
