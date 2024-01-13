@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import imgfile from "../assets/imgfile.png";
 import formatTimestamp from "../utils/formatTimestamp";
+import Button from "./Button";
 
 export default function UploadBox() {
   const [isActive, setActive] = useState(false);
@@ -73,6 +74,18 @@ export default function UploadBox() {
     setFileInfo(file);
   };
 
+  // 파일 저장하는 함수
+  const saveImage = () => {
+    const canvas = canvasRef.current;
+    const dataURL = canvas.toDataURL("image/png"); // png 형식 사용
+
+    // a 태그를 생성하고 다운로드 링크로 사용
+    const a = document.createElement("a");
+    a.href = dataURL;
+    a.download = `${uploadedInfo.name}_time`; // 파일명
+    a.click();
+  };
+
   return (
     <Wrapper>
       <label
@@ -104,11 +117,21 @@ export default function UploadBox() {
           </>
         )}
       </label>
+      {uploadedInfo && (
+        <div onClick={saveImage}>
+          <Button />
+        </div>
+      )}
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   .file {
     display: none;
   }
