@@ -23,29 +23,19 @@ export default function UploadBox() {
 
   // 파일 정보를 세팅하는 함수
   const setFileInfo = (file) => {
-    console.log(file); // 파일 객체 확인
     const { name, size, type, lastModified } = file;
     const formattedSize = (size / (1024 * 1024)).toFixed(2) + "mb";
-
-    const fileInfo = { name, formattedSize, type, lastModified };
+    const url = URL.createObjectURL(file);
+    const fileInfo = { name, formattedSize, type, lastModified, url };
 
     setUploadedInfo(fileInfo);
   };
 
-  // 미리보기 업로드 함수
+  // 파일 업로드 함수
   const handleUpload = (e) => {
     const file = e.target.files[0];
+    console.log(file); // 파일 객체 확인
     setFileInfo(file);
-
-    // FileReader를 사용하여 이미지 미리보기를 생성
-    const reader = new FileReader();
-    reader.onload = () => {
-      setUploadedInfo((prevInfo) => ({
-        ...prevInfo,
-        preview: reader.result,
-      }));
-    };
-    reader.readAsDataURL(file);
   };
 
   return (
@@ -68,7 +58,7 @@ export default function UploadBox() {
           <>
             <img
               className="preview-img"
-              src={uploadedInfo.preview}
+              src={uploadedInfo.url}
               alt={uploadedInfo.name}
             />
           </>
