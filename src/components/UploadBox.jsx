@@ -4,6 +4,8 @@ import { useState } from "react";
 
 export default function UploadBox() {
   const [isActive, setActive] = useState(false);
+  const [uploadedInfo, setUploadedInfo] = useState(null);
+
   const handleDragStart = () => setActive(true);
   const handleDragEnd = () => setActive(false);
   const handleDragOver = (event) => {
@@ -12,9 +14,27 @@ export default function UploadBox() {
 
   const handleDrop = (event) => {
     event.preventDefault();
+    setActive(false);
 
     const file = event.dataTransfer.files[0];
-    setActive(false);
+    setFileInfo(file);
+  };
+
+  // 파일 정보를 세팅하는 함수
+  const setFileInfo = (file) => {
+    console.log(file); // 파일 객체 확인
+    const { name, size, type, lastModified } = file;
+    const formattedSize = (size / (1024 * 1024)).toFixed(2) + "mb";
+
+    const fileInfo = { name, formattedSize, type, lastModified };
+
+    setUploadedInfo(fileInfo);
+  };
+
+  // 미리보기 업로드 함수
+  const handleUpload = (e) => {
+    const file = e.target.files[0];
+    setFileInfo(file);
   };
 
   return (
@@ -26,9 +46,15 @@ export default function UploadBox() {
         onDragLeave={handleDragEnd}
         onDrop={handleDrop}
       >
-        <input type="file" className="file" />
-        <img className="img-icon" src={imgfile} alt="img-icon" />
-        <p className="preview_msg">클릭 혹은 파일을 이곳에 드롭하세요.</p>
+        <input type="file" className="file" onChange={handleUpload} />
+        {uploadedInfo ? (
+          <>{uploadedInfo.name}</>
+        ) : (
+          <>
+            <img className="img-icon" src={imgfile} alt="img-icon" />
+            <p className="preview_msg">클릭 혹은 파일을 이곳에 드롭하세요.</p>
+          </>
+        )}
       </label>
     </Wrapper>
   );
