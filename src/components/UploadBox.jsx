@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import imgfile from "../assets/imgfile.png";
 import formatTimestamp from "../utils/formatTimestamp";
@@ -6,17 +6,52 @@ import formatTimestamp from "../utils/formatTimestamp";
 export default function UploadBox() {
   const [isActive, setActive] = useState(false);
   const [uploadedInfo, setUploadedInfo] = useState(null);
+  const imgRef = useRef();
+  const canvasRef = useRef(null);
 
+  useEffect(() => {
+    if (uploadedInfo) {
+      // 날짜 변환
+      const date = formatTimestamp(uploadedInfo.lastModified);
+
+      // 이미지 그리기
+      const img = new Image();
+      img.src = uploadedInfo.url;
+      img.onload = () => {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext("2d");
+
+        // 캔버스의 크기를 이미지의 크기로 설정
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        // 텍스트 그리기
+
+        // 폰트 크기 계산
+        const fontSize = canvas.width * 0.05;
+
+        // 텍스트 위치 계산
+        const textX = canvas.width * 0.1;
+        const textY = canvas.height * 0.9;
+
+        ctx.fillStyle = "white";
+        ctx.font = `${fontSize}px Arial`;
+        ctx.fillText(date, textX, textY);
+      };
+    }
+  }, [uploadedInfo]);
+
+  // 드래그 앤 드롭을 제어하는 함수들
   const handleDragStart = () => setActive(true);
   const handleDragEnd = () => setActive(false);
   const handleDragOver = (event) => {
     event.preventDefault();
   };
-
   const handleDrop = (event) => {
     event.preventDefault();
     setActive(false);
-
     const file = event.dataTransfer.files[0];
     setFileInfo(file);
   };
@@ -49,6 +84,7 @@ export default function UploadBox() {
         onDrop={handleDrop}
       >
         <input
+          ref={imgRef}
           type="file"
           accept="image/*"
           className="file"
@@ -56,9 +92,9 @@ export default function UploadBox() {
         />
         {uploadedInfo ? (
           <>
-            <img
+            <canvas
               className="preview-img"
-              src={uploadedInfo.url}
+              ref={canvasRef}
               alt={uploadedInfo.name}
             />
           </>
