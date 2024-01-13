@@ -71,7 +71,9 @@ export default function UploadBox() {
   const handleUpload = (e) => {
     const file = e.target.files[0];
     console.log(file); // 파일 객체 확인
-    setFileInfo(file);
+    if (file) {
+      setFileInfo(file);
+    }
   };
 
   // 파일 저장하는 함수
