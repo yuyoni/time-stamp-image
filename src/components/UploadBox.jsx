@@ -6,6 +6,9 @@ export default function UploadBox() {
   const [isActive, setActive] = useState(false);
   const handleDragStart = () => setActive(true);
   const handleDragEnd = () => setActive(false);
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
 
   const handleDrop = (event) => {
     event.preventDefault();
@@ -18,9 +21,10 @@ export default function UploadBox() {
     <Wrapper>
       <label
         className={`preview${isActive ? " active" : ""}`} // isActive 값에 따라 className 제어
-        onDragEnter={handleDragStart} // dragstart 핸들러 추가
-        onDragLeave={handleDragEnd} // dragend 핸들러 추가
-        onDrop={handleDrop} // drop 핸들러 추가
+        onDragEnter={handleDragStart}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragEnd}
+        onDrop={handleDrop}
       >
         <input type="file" className="file" />
         <img className="img-icon" src={imgfile} alt="img-icon" />
