@@ -17,7 +17,7 @@ const Wrapper = styled.button`
   margin-top: 40px;
   width: 160px;
   height: 80px;
-  border: 2px solid lightgray;
+  border: 3px solid gray;
   outline: none;
   background-color: #f4f5f6;
   border-radius: 28px;
@@ -41,13 +41,13 @@ const Wrapper = styled.button`
     position: absolute;
     top: 4px;
     display: grid;
-    padding: 20px;
+    padding: 19px;
     width: 115px;
     height: 32px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     box-shadow: inset 0px -8px 0px #dddddd, 0px -8px 0px #f4f5f6;
-    border-radius: 23px;
+    border-radius: 24px;
     transition: 0.13s ease-in-out;
     z-index: 1;
   }
@@ -60,6 +60,7 @@ const Wrapper = styled.button`
     grid-column: 1/5;
     grid-row: 2;
     text-align: center;
+    font-family: "San Francisco";
     font-size: 24px;
     background-color: #888888;
 

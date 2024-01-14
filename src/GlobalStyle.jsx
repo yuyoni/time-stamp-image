@@ -25,8 +25,16 @@ const GlobalStyle = createGlobalStyle`
       font-display: block;
   }
 
+  @font-face {
+    font-family: "San Francisco";
+    font-weight: 400;
+    font-style: normal;
+    font-display: block;
+    src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.woff") format('woff');
+  }
+
   body {
-    font-family: 'GmarketSansMedium', 'DNFBitBitv2', 'DOSGothic', sans-serif;
+    font-family: 'GmarketSansMedium', 'DNFBitBitv2', 'DOSGothic', "San Francisco";
     margin: 0;
     padding: 0;
     background-color: #cfc1ab;
