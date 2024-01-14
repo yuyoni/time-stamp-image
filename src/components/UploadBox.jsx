@@ -99,6 +99,19 @@ export default function UploadBox() {
     });
   };
 
+  // 클립보드에서 파일 가져와서 처리
+  const handleClipboardChange = async (event) => {
+    const items = event.clipboardData.items;
+
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      if (item.type.indexOf("image") !== -1) {
+        const blob = await item.getAsFile();
+        setFileInfo(blob);
+      }
+    }
+  };
+
   return (
     <Wrapper>
       <label
@@ -107,6 +120,7 @@ export default function UploadBox() {
         onDragOver={handleDragOver}
         onDragLeave={handleDragEnd}
         onDrop={handleDrop}
+        onPaste={handleClipboardChange}
       >
         <input
           ref={imgRef}
