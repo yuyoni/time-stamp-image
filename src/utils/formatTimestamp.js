@@ -9,7 +9,8 @@ export default function formatTimestamp(timestamp) {
   const ampm = hours >= 12 ? "오후" : "오전";
   const formattedHours = hours % 12 || 12; // 0시를 12시로 변경
 
-  const formattedDate = `${year}년 ${month}월 ${day}일 (${weekday}) ${ampm} ${formattedHours}:${minutes}`;
+  const formattedDateText = `${year}년 ${month}월 ${day}일 (${weekday}) ${ampm} ${formattedHours}:${minutes}`;
+  const formattedDateNum = `${year}/${month}/${day}\n${ampm} ${formattedHours}:${minutes}`;
 
-  return formattedDate;
+  return [formattedDateText, formattedDateNum];
 }

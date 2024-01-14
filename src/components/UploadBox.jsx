@@ -2,21 +2,25 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import imgfile from "../assets/imgfile.png";
 import formatTimestamp from "../utils/formatTimestamp";
-import Button from "./Button";
+import SaveButton from "./buttons/SaveButton";
 import CopyToClipboard from "react-copy-to-clipboard";
+import calculateTextPosition from "../utils/caculateTextPosition";
+import ButtonList from "./buttons/ButtonList";
 
 export default function UploadBox() {
   const [isActive, setActive] = useState(false);
   const [uploadedInfo, setUploadedInfo] = useState(null);
+  const [font, setFont] = useState("GmarketSansMedium");
+  const [fontColor, setFontColor] = useState("white");
+  const [textPosition, setTextPosition] = useState("bottom");
+  const [textStyle, setTextStyle] = useState("twoline");
+
   const imgRef = useRef();
   const canvasRef = useRef(null);
 
   useEffect(() => {
     if (uploadedInfo) {
-      // 날짜 변환
-      const date = formatTimestamp(uploadedInfo.lastModified);
-
-      // 이미지 그리기
+      /* 이미지 그리기 */
       const img = new Image();
       img.src = uploadedInfo.url;
       img.onload = () => {
@@ -29,21 +33,38 @@ export default function UploadBox() {
 
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-        // 텍스트 그리기
+        /* 텍스트 그리기 */
+
+        // 날짜 변환
+        const date = formatTimestamp(uploadedInfo.lastModified);
 
         // 폰트 크기 계산
         const fontSize = canvas.width * 0.05;
 
-        // 텍스트 위치 계산
-        const textX = canvas.width * 0.1;
-        const textY = canvas.height * 0.9;
+        // 폰트 스타일
+        ctx.fillStyle = fontColor;
+        ctx.font = `${fontSize}px ${font}`;
+        ctx.shadowColor = `${
+          fontColor === "white"
+            ? "rgba(0, 0, 0, 0.5)"
+            : "rgba(255, 255, 255, 0.8)"
+        }`;
+        ctx.shadowBlur = 2;
+        ctx.shadowOffsetX = 1;
+        ctx.shadowOffsetY = 1;
 
-        ctx.fillStyle = "white";
-        ctx.font = `${fontSize}px Arial`;
-        ctx.fillText(date, textX, textY);
+        // 폰트 위치 계산
+        calculateTextPosition(
+          textStyle,
+          fontSize,
+          textPosition,
+          canvas,
+          date,
+          ctx
+        );
       };
     }
-  }, [uploadedInfo]);
+  }, [uploadedInfo, font, fontColor, textPosition, textStyle]);
 
   // 드래그 앤 드롭을 제어하는 함수들
   const handleDragStart = () => setActive(true);
@@ -114,6 +135,14 @@ export default function UploadBox() {
 
   return (
     <Wrapper>
+      {uploadedInfo?.lastModified && (
+        <ButtonList
+          setFont={setFont}
+          setFontColor={setFontColor}
+          setTextPosition={setTextPosition}
+          setTextStyle={setTextStyle}
+        />
+      )}
       <label
         className={`preview${isActive ? " active" : ""}`} // isActive 값에 따라 className 제어
         onDragEnter={handleDragStart}
@@ -144,20 +173,18 @@ export default function UploadBox() {
           </>
         )}
       </label>
-      <ButtonContainer>
-        {uploadedInfo && (
+      {uploadedInfo && (
+        <ButtonContainer>
           <div onClick={saveImage}>
-            <Button text={"save"} />
+            <SaveButton text={"save"} />
           </div>
-        )}
-        {uploadedInfo && (
           <CopyToClipboard text={uploadedInfo.url}>
             <div onClick={copyToClipboard}>
-              <Button text={"copy"} />
+              <SaveButton text={"copy"} />
             </div>
           </CopyToClipboard>
-        )}
-      </ButtonContainer>
+        </ButtonContainer>
+      )}
     </Wrapper>
   );
 }
