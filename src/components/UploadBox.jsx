@@ -16,6 +16,8 @@ export default function UploadBox() {
   const [textStyle, setTextStyle] = useState("oneline");
 
   const [showCopyMessage, setShowCopyMessage] = useState(false);
+  const [showSaveMessage, setShowSaveMessage] = useState(false);
+  const [saveConfirm, setSaveConfirm] = useState(false);
 
   const imgRef = useRef();
   const canvasRef = useRef(null);
@@ -101,17 +103,22 @@ export default function UploadBox() {
   };
 
   // 파일 저장하는 함수
-  const saveImage = () => {
-    const canvas = canvasRef.current;
-    const dataURL = canvas.toDataURL("image/png"); // png 형식 사용
+  useEffect(() => {
+    if (saveConfirm) {
+      const canvas = canvasRef.current;
+      const dataURL = canvas.toDataURL("image/png"); // png 형식 사용
 
-    // a 태그를 생성하고 다운로드 링크로 사용
-    const a = document.createElement("a");
-    a.href = dataURL;
-    const renamedFile = uploadedInfo.name.split(".")[0] + "_time";
-    a.download = renamedFile; // 파일명
-    a.click();
-  };
+      // a 태그를 생성하고 다운로드 링크로 사용
+      const a = document.createElement("a");
+      a.href = dataURL;
+      const renamedFile = uploadedInfo.name.split(".")[0] + "_time";
+      a.download = renamedFile; // 파일명
+      a.click();
+
+      setSaveConfirm(false);
+      setShowSaveMessage(false);
+    }
+  }, [saveConfirm, uploadedInfo]);
 
   // 캔버스 blob객체를 생성한 후 url을 클립보드에 복사하는 함수
   const copyToClipboard = () => {
@@ -143,6 +150,30 @@ export default function UploadBox() {
   return (
     <Wrapper>
       {showCopyMessage && <CopyMessage>클립보드에 복사되었습니다.</CopyMessage>}
+      {showSaveMessage && (
+        <SaveMessage>
+          <p>저장하시겠습니까?</p>
+          <div>
+            <button
+              className="yes"
+              onClick={() => {
+                setSaveConfirm(true);
+                setShowSaveMessage(false);
+              }}
+            >
+              YES
+            </button>
+            <button
+              className="no"
+              onClick={() => {
+                setShowSaveMessage(false);
+              }}
+            >
+              NO
+            </button>
+          </div>
+        </SaveMessage>
+      )}
       {uploadedInfo?.lastModified && (
         <button className="reset" onClick={() => setUploadedInfo(null)}>
           RESET
@@ -188,7 +219,7 @@ export default function UploadBox() {
       </label>
       {uploadedInfo && (
         <ButtonContainer>
-          <div onClick={saveImage}>
+          <div onClick={() => setShowSaveMessage(true)}>
             <SaveButton text={"save"} />
           </div>
           <CopyToClipboard text={uploadedInfo.url}>
@@ -212,6 +243,41 @@ const CopyMessage = styled.div`
   color: white;
   border-radius: 5px;
   z-index: 999;
+`;
+
+const SaveMessage = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  width: 400px;
+  height: 160px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #000;
+  font-size: 24px;
+  border-radius: 5px;
+  z-index: 999;
+
+  div {
+    display: flex;
+    gap: 40px;
+    .yes,
+    .no {
+      width: 80px;
+      height: 40px;
+    }
+    .yes {
+      background-color: #599f6d;
+    }
+    .no {
+      background-color: #bd4030;
+    }
+  }
 `;
 
 const Wrapper = styled.div`

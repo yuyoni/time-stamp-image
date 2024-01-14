@@ -44,6 +44,7 @@ const GlobalStyle = createGlobalStyle`
 
   button {
     border: none;
+    cursor: pointer;
   }
 `;
 

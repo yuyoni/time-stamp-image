@@ -24,7 +24,6 @@ const Wrapper = styled.button`
   box-shadow: -6px -20px 35px #e1d5c2, -6px -10px 15px #cfc1ab,
     -20px 0px 30px #e1d5c2, 6px 20px 25px rgba(0, 0, 0, 0.1);
   transition: 0.13s ease-in-out;
-  cursor: pointer;
 
   &:active {
     box-shadow: none;

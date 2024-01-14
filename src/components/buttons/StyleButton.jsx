@@ -26,8 +26,6 @@ const Wrapper = styled.div`
     border-radius: 5px;
     transition: all 0.2s;
 
-    cursor: pointer;
-
     &:hover {
       margin-top: 12px;
       margin-bottom: 8px;
