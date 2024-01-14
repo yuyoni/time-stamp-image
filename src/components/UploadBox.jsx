@@ -39,7 +39,12 @@ export default function UploadBox() {
         const textY = canvas.height * 0.9;
 
         ctx.fillStyle = "white";
-        ctx.font = `${fontSize}px Arial`;
+        ctx.font = `${fontSize}px GmarketSansMedium`;
+        ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
+        ctx.shadowBlur = 5;
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
+
         ctx.fillText(date, textX, textY);
       };
     }
