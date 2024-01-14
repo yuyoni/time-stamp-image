@@ -15,6 +15,8 @@ export default function UploadBox() {
   const [textPosition, setTextPosition] = useState("bottom");
   const [textStyle, setTextStyle] = useState("oneline");
 
+  const [showCopyMessage, setShowCopyMessage] = useState(false);
+
   const imgRef = useRef();
   const canvasRef = useRef(null);
 
@@ -116,7 +118,12 @@ export default function UploadBox() {
     const canvas = canvasRef.current;
     canvas.toBlob((blob) => {
       const clipboardData = new ClipboardItem({ "image/png": blob });
-      navigator.clipboard.write([clipboardData]);
+      navigator.clipboard.write([clipboardData]).then(() => {
+        setShowCopyMessage(true);
+        setTimeout(() => {
+          setShowCopyMessage(false);
+        }, 2000);
+      });
     });
   };
 
@@ -135,6 +142,7 @@ export default function UploadBox() {
 
   return (
     <Wrapper>
+      {showCopyMessage && <CopyMessage>클립보드에 복사되었습니다.</CopyMessage>}
       {uploadedInfo?.lastModified && (
         <button className="reset" onClick={() => setUploadedInfo(null)}>
           RESET
@@ -193,6 +201,18 @@ export default function UploadBox() {
     </Wrapper>
   );
 }
+
+const CopyMessage = styled.div`
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: white;
+  border-radius: 5px;
+  z-index: 999;
+`;
 
 const Wrapper = styled.div`
   display: flex;
