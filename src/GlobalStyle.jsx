@@ -29,7 +29,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'GmarketSansMedium', 'DNFBitBitv2', 'DOSGothic', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
+    background-color: #cfc1ab;
     display: flex;
     justify-content: center;
     align-items: center;

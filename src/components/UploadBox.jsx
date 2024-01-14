@@ -13,7 +13,7 @@ export default function UploadBox() {
   const [font, setFont] = useState("GmarketSansMedium");
   const [fontColor, setFontColor] = useState("white");
   const [textPosition, setTextPosition] = useState("bottom");
-  const [textStyle, setTextStyle] = useState("twoline");
+  const [textStyle, setTextStyle] = useState("oneline");
 
   const imgRef = useRef();
   const canvasRef = useRef(null);
@@ -136,6 +136,11 @@ export default function UploadBox() {
   return (
     <Wrapper>
       {uploadedInfo?.lastModified && (
+        <button className="reset" onClick={() => setUploadedInfo(null)}>
+          RESET
+        </button>
+      )}
+      {uploadedInfo?.lastModified && (
         <ButtonList
           setFont={setFont}
           setFontColor={setFontColor}
@@ -207,7 +212,7 @@ const Wrapper = styled.div`
 
   .file::file-selector-button {
     font-size: 14px;
-    background: #fff;
+    background: #f3f3f3;
     border: 1px solid #111;
     border-radius: 12px;
     padding: 4px 32px;
@@ -218,7 +223,6 @@ const Wrapper = styled.div`
     width: 300px;
     height: 150px;
     margin: auto;
-    background-color: #fff;
     border-radius: 5px;
     border: 3px dashed #eee;
     padding: 70px;
@@ -234,7 +238,7 @@ const Wrapper = styled.div`
   }
 
   .preview.active {
-    background-color: #efeef3;
+    background-color: #a49078;
     border-color: #111;
   }
 
@@ -247,6 +251,40 @@ const Wrapper = styled.div`
     font-weight: 500;
     font-size: 18px;
     margin: 20px 0 10px;
+  }
+
+  .reset {
+    font-family: "DOSGothic";
+    background: #bd4030;
+    box-shadow: 0px 5px 0px 0px #962b1f;
+
+    display: block;
+    position: relative;
+    float: left;
+    width: 60px;
+    height: 50px;
+    padding: 0;
+    margin: 10px 20px 10px 0;
+    text-align: center;
+    font-size: 18px;
+
+    color: #f3f3f3;
+    border-radius: 50%;
+    transition: all 0.2s;
+
+    cursor: pointer;
+
+    &:hover {
+      margin-top: 12px;
+      margin-bottom: 8px;
+      box-shadow: 0px 4px 0px 0px #962b1f;
+    }
+
+    &:active {
+      margin-top: 15px;
+      margin-bottom: 5px;
+      box-shadow: 0px 0px 0px 0px #962b1f;
+    }
   }
 `;
 

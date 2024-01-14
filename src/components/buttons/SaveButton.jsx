@@ -21,8 +21,8 @@ const Wrapper = styled.button`
   outline: none;
   background-color: #f4f5f6;
   border-radius: 28px;
-  box-shadow: -6px -20px 35px #ffffff, -6px -10px 15px #e4e2e2,
-    -20px 0px 30px #ffffff, 6px 20px 25px rgba(0, 0, 0, 0.1);
+  box-shadow: -6px -20px 35px #e1d5c2, -6px -10px 15px #cfc1ab,
+    -20px 0px 30px #e1d5c2, 6px 20px 25px rgba(0, 0, 0, 0.1);
   transition: 0.13s ease-in-out;
   cursor: pointer;
 

@@ -12,49 +12,49 @@ export default function ButtonList({
       <Container>
         <StyleButton
           name={"oneline"}
-          buttonText={"oneline"}
+          buttontext={"oneline"}
           setter={() => setTextStyle("oneline")}
         />
         <StyleButton
           name={"twoline"}
-          buttonText={"twoline"}
+          buttontext={"twoline"}
           setter={() => setTextStyle("twoline")}
         />
         <StyleButton
           name={"top"}
-          buttonText={"top"}
+          buttontext={"top"}
           setter={() => setTextPosition("top")}
         />
         <StyleButton
           name={"bottom"}
-          buttonText={"bottom"}
+          buttontext={"bottom"}
           setter={() => setTextPosition("bottom")}
         />
         <StyleButton
           name={"black"}
-          buttonText={"black"}
+          buttontext={"black"}
           setter={() => setFontColor("black")}
         />
         <StyleButton
           name={"white"}
-          buttonText={"white"}
+          buttontext={"white"}
           setter={() => setFontColor("white")}
         />
       </Container>
       <Container>
         <StyleButton
           name={"GmarketSans"}
-          buttonText={"폰트1"}
+          buttontext={"폰트1"}
           setter={() => setFont("GmarketSans")}
         />
         <StyleButton
           name={"DNFBitBitv2"}
-          buttonText={"폰트2"}
+          buttontext={"폰트2"}
           setter={() => setFont("DNFBitBitv2")}
         />
         <StyleButton
           name={"DOSGothic"}
-          buttonText={"폰트3"}
+          buttontext={"폰트3"}
           setter={() => setFont("DOSGothic")}
         />
       </Container>

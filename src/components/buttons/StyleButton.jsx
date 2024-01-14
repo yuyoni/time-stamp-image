@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-export default function StyleButton({ name, setter, buttonText }) {
+export default function StyleButton({ name, setter, buttontext }) {
   return (
     <Wrapper>
-      <button className={name} onClick={setter} buttonText={buttonText}>
-        {buttonText}
+      <button className={name} onClick={setter} buttontext={buttontext}>
+        {buttontext}
       </button>
     </Wrapper>
   );
@@ -22,7 +22,7 @@ const Wrapper = styled.div`
     text-align: center;
     line-height: 40px;
 
-    color: #fff;
+    color: #f3f3f3;
     border-radius: 5px;
     transition: all 0.2s;
 
@@ -52,7 +52,7 @@ const Wrapper = styled.div`
     }
   }
   .white {
-    background-color: #ffffff;
+    background-color: #f3f3f3;
     color: black;
     box-shadow: 0px 5px 0px 0px #b2b2b2;
 
