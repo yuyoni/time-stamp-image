@@ -4,6 +4,7 @@ import imgfile from "../assets/imgfile.png";
 import formatTimestamp from "../utils/formatTimestamp";
 import Button from "./Button";
 import CopyToClipboard from "react-copy-to-clipboard";
+import calculateTextPosition from "../utils/caculateTextPosition";
 
 export default function UploadBox() {
   const [isActive, setActive] = useState(false);
@@ -51,64 +52,14 @@ export default function UploadBox() {
         ctx.shadowOffsetX = 1;
         ctx.shadowOffsetY = 1;
 
-        // 폰트 위치
-        let textX, textY;
-        let result;
-
-        switch (textStyle) {
-          case "twoline": {
-            const lineheight = fontSize * 1.2;
-
-            switch (textPosition) {
-              case "top": {
-                textX = canvas.width * 0.1;
-                textY = canvas.height * 0.1 + lineheight;
-                break;
-              }
-              case "bottom": {
-                textX = canvas.width * 0.1;
-                textY = canvas.height * 0.9 - lineheight;
-                break;
-              }
-              default: {
-                textX = canvas.width * 0.1;
-                textY = canvas.height * 0.9;
-              }
-            }
-            result = date[1].split("\n");
-            for (let i = 0; i < result.length; i++) {
-              ctx.fillText(result[i], textX, textY + i * lineheight);
-            }
-            break;
-          }
-          default: {
-            // 텍스트 위치 계산
-            switch (textPosition) {
-              case "top": {
-                textX = canvas.width * 0.1;
-                textY = canvas.height * 0.15;
-                // 여기서 textX와 textY를 사용하여 작업 수행
-                break;
-              }
-              case "bottom": {
-                textX = canvas.width * 0.1;
-                textY = canvas.height * 0.85;
-                // 여기서 textX와 textY를 사용하여 작업 수행
-                break;
-              }
-              default: {
-                textX = canvas.width * 0.1;
-                textY = canvas.height * 0.9;
-              }
-            }
-            result = date[0].split("\n");
-            for (let i = 0; i < result.length; i++) {
-              ctx.fillText(result[i], textX, textY);
-            }
-          }
-        }
-
-        // ctx.fillText(date[1], textX, textY);
+        calculateTextPosition(
+          textStyle,
+          fontSize,
+          textPosition,
+          canvas,
+          date,
+          ctx
+        );
       };
     }
   }, [uploadedInfo, font, fontColor, textPosition, textStyle]);
