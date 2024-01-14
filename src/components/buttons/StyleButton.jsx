@@ -1,57 +1,18 @@
 import styled from "styled-components";
 
-export default function FontStyleButton({
-  setTextStyle,
-  setTextPosition,
-  setFontColor,
-  setFont,
-}) {
+export default function StyleButton({ name, setter, buttonText }) {
   return (
-    <FontStyleContainer>
-      <ColorContainer>
-        <button className="oneline" onClick={() => setTextStyle("oneline")}>
-          oneline
-        </button>
-        <button className="twoline" onClick={() => setTextStyle("twoline")}>
-          twoline
-        </button>
-        <button className="top" onClick={() => setTextPosition("top")}>
-          top
-        </button>
-        <button className="bottom" onClick={() => setTextPosition("bottom")}>
-          bottom
-        </button>
-        <button className="black" onClick={() => setFontColor("black")}>
-          black
-        </button>
-        <button className="white" onClick={() => setFontColor("white")}>
-          white
-        </button>
-      </ColorContainer>
-      <FontContainer>
-        <button
-          className="GmarketSans"
-          onClick={() => setFont("GmarketSansMedium")}
-        >
-          폰트1
-        </button>
-        <button className="DNFBitBitv2" onClick={() => setFont("DNFBitBitv2")}>
-          폰트2
-        </button>
-        <button className="DOSGothic" onClick={() => setFont("DOSGothic")}>
-          폰트3
-        </button>
-      </FontContainer>
-    </FontStyleContainer>
+    <Wrapper>
+      <button className={name} onClick={setter} buttonText={buttonText}>
+        {buttonText}
+      </button>
+    </Wrapper>
   );
 }
 
-const FontStyleContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 10px;
-
+const Wrapper = styled.div`
   button {
+    font-family: "GmarketSansMedium";
     display: block;
     position: relative;
     float: left;
@@ -77,15 +38,7 @@ const FontStyleContainer = styled.div`
       margin-bottom: 5px;
     }
   }
-`;
-const ColorContainer = styled.div`
-  display: flex;
-  gap: 10px;
-  justify-content: center;
 
-  button {
-    font-family: "GmarketSansMedium";
-  }
   .black {
     background-color: #313131;
     color: white;
@@ -110,6 +63,7 @@ const ColorContainer = styled.div`
       box-shadow: 0px 0px 0px 0px #b2b2b2;
     }
   }
+
   .oneline,
   .twoline {
     background-color: #599f8c;
@@ -137,11 +91,6 @@ const ColorContainer = styled.div`
       box-shadow: 0px 0px 0px 0px #382c39;
     }
   }
-`;
-const FontContainer = styled.div`
-  display: flex;
-  gap: 10px;
-  justify-content: center;
 
   .GmarketSans {
     font-family: "GmarketSansMedium";

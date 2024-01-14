@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function Button({ text }) {
+export default function SaveButton({ text }) {
   return (
     <Wrapper>
-      <div className="button__content">
-        <p className="button__text">{text}</p>
+      <div className="button-content">
+        <p className="button-text">{text}</p>
       </div>
     </Wrapper>
   );
@@ -29,16 +29,16 @@ const Wrapper = styled.button`
   &:active {
     box-shadow: none;
 
-    .button__content {
+    .button-content {
       box-shadow: none;
 
-      .button__text {
+      .button-text {
         transform: translate3d(32px, 12px, 0px);
       }
     }
   }
 
-  .button__content {
+  .button-content {
     position: absolute;
     top: 4px;
     display: grid;
@@ -53,7 +53,7 @@ const Wrapper = styled.button`
     z-index: 1;
   }
 
-  .button__text {
+  .button-text {
     position: relative;
     transform: translate3d(32px, 4px, 0px);
     margin: 0;

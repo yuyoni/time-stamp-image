@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import imgfile from "../assets/imgfile.png";
 import formatTimestamp from "../utils/formatTimestamp";
-import Button from "./Button";
+import SaveButton from "./buttons/SaveButton";
 import CopyToClipboard from "react-copy-to-clipboard";
 import calculateTextPosition from "../utils/caculateTextPosition";
-import FontStyleButton from "./FontStyleButton";
+import ButtonList from "./buttons/ButtonList";
 
 export default function UploadBox() {
   const [isActive, setActive] = useState(false);
@@ -20,7 +20,7 @@ export default function UploadBox() {
 
   useEffect(() => {
     if (uploadedInfo) {
-      // 이미지 그리기
+      /* 이미지 그리기 */
       const img = new Image();
       img.src = uploadedInfo.url;
       img.onload = () => {
@@ -33,7 +33,7 @@ export default function UploadBox() {
 
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-        // 텍스트 그리기
+        /* 텍스트 그리기 */
 
         // 날짜 변환
         const date = formatTimestamp(uploadedInfo.lastModified);
@@ -53,6 +53,7 @@ export default function UploadBox() {
         ctx.shadowOffsetX = 1;
         ctx.shadowOffsetY = 1;
 
+        // 폰트 위치 계산
         calculateTextPosition(
           textStyle,
           fontSize,
@@ -135,7 +136,7 @@ export default function UploadBox() {
   return (
     <Wrapper>
       {uploadedInfo?.lastModified && (
-        <FontStyleButton
+        <ButtonList
           setFont={setFont}
           setFontColor={setFontColor}
           setTextPosition={setTextPosition}
@@ -175,11 +176,11 @@ export default function UploadBox() {
       {uploadedInfo && (
         <ButtonContainer>
           <div onClick={saveImage}>
-            <Button text={"save"} />
+            <SaveButton text={"save"} />
           </div>
           <CopyToClipboard text={uploadedInfo.url}>
             <div onClick={copyToClipboard}>
-              <Button text={"copy"} />
+              <SaveButton text={"copy"} />
             </div>
           </CopyToClipboard>
         </ButtonContainer>
