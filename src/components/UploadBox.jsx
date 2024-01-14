@@ -10,6 +10,7 @@ export default function UploadBox() {
   const [uploadedInfo, setUploadedInfo] = useState(null);
   const [font, setFont] = useState("GmarketSansMedium");
   const [fontColor, setFontColor] = useState("white");
+  const [textPosition, setTextPosition] = useState("bottom");
 
   const imgRef = useRef();
   const canvasRef = useRef(null);
@@ -37,9 +38,26 @@ export default function UploadBox() {
         // 폰트 크기 계산
         const fontSize = canvas.width * 0.05;
 
+        let textX, textY;
         // 텍스트 위치 계산
-        const textX = canvas.width * 0.1;
-        const textY = canvas.height * 0.9;
+        switch (textPosition) {
+          case "top": {
+            textX = canvas.width * 0.1;
+            textY = canvas.height * 0.15;
+            // 여기서 textX와 textY를 사용하여 작업 수행
+            break;
+          }
+          case "bottom": {
+            textX = canvas.width * 0.1;
+            textY = canvas.height * 0.85;
+            // 여기서 textX와 textY를 사용하여 작업 수행
+            break;
+          }
+          default: {
+            textX = canvas.width * 0.1;
+            textY = canvas.height * 0.9;
+          }
+        }
 
         ctx.fillStyle = fontColor;
         ctx.font = `${fontSize}px ${font}`;
@@ -55,7 +73,7 @@ export default function UploadBox() {
         ctx.fillText(date, textX, textY);
       };
     }
-  }, [uploadedInfo, font, fontColor]);
+  }, [uploadedInfo, font, fontColor, textPosition]);
 
   // 드래그 앤 드롭을 제어하는 함수들
   const handleDragStart = () => setActive(true);
@@ -129,6 +147,15 @@ export default function UploadBox() {
       {uploadedInfo?.lastModified && (
         <FontStyleContainer>
           <ColorContainer>
+            <button className="top" onClick={() => setTextPosition("top")}>
+              top
+            </button>
+            <button
+              className="bottom"
+              onClick={() => setTextPosition("bottom")}
+            >
+              bottom
+            </button>
             <button className="black" onClick={() => setFontColor("black")}>
               black
             </button>
@@ -238,23 +265,44 @@ const ColorContainer = styled.div`
   gap: 10px;
   justify-content: center;
 
-  .black {
-    color: black;
-  }
-  .white {
-    color: white;
-  }
-
   button {
-    background: #599f8c;
-    box-shadow: 0px 5px 0px 0px #386358;
     font-family: "GmarketSansMedium";
+  }
+  .black {
+    background-color: #313131;
+    color: white;
+    box-shadow: 0px 5px 0px 0px #000000;
 
     &:hover {
-      box-shadow: 0px 4px 0px 0px #386358;
+      box-shadow: 0px 4px 0px 0px #000000;
     }
     &:active {
-      box-shadow: 0px 0px 0px 0px #386358;
+      box-shadow: 0px 0px 0px 0px #000000;
+    }
+  }
+  .white {
+    background-color: #ffffff;
+    color: black;
+    box-shadow: 0px 5px 0px 0px #b2b2b2;
+
+    &:hover {
+      box-shadow: 0px 4px 0px 0px #b2b2b2;
+    }
+    &:active {
+      box-shadow: 0px 0px 0px 0px #b2b2b2;
+    }
+  }
+  .top,
+  .bottom {
+    background-color: #599f8c;
+    color: white;
+    box-shadow: 0px 5px 0px 0px #346457;
+
+    &:hover {
+      box-shadow: 0px 4px 0px 0px #346457;
+    }
+    &:active {
+      box-shadow: 0px 0px 0px 0px #346457;
     }
   }
 `;
