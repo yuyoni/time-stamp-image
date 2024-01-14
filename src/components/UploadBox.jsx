@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import imgfile from "../assets/imgfile.png";
-import formatTimestamp from "../utils/formatTimestamp";
-import SaveButton from "./buttons/SaveButton";
-import CopyToClipboard from "react-copy-to-clipboard";
 import calculateTextPosition from "../utils/caculateTextPosition";
-import ButtonList from "./buttons/ButtonList";
+import formatTimestamp from "../utils/formatTimestamp";
+import ResetButton from "./buttons/ResetButton";
+import SaveButtonBox from "./buttons/SaveButtonBox";
+import StyleButtonBox from "./buttons/StyleButtonBox";
+import CopyMessage from "./popup/CopyMessage";
+import SaveMessage from "./popup/SaveMessage";
 
 export default function UploadBox() {
   const [isActive, setActive] = useState(false);
@@ -121,7 +123,7 @@ export default function UploadBox() {
   }, [saveConfirm, uploadedInfo]);
 
   // 캔버스 blob객체를 생성한 후 url을 클립보드에 복사하는 함수
-  const copyToClipboard = () => {
+  const copyImage = () => {
     const canvas = canvasRef.current;
     canvas.toBlob((blob) => {
       const clipboardData = new ClipboardItem({ "image/png": blob });
@@ -149,43 +151,23 @@ export default function UploadBox() {
 
   return (
     <Wrapper>
-      {showCopyMessage && <CopyMessage>클립보드에 복사되었습니다.</CopyMessage>}
+      {showCopyMessage && <CopyMessage />}
       {showSaveMessage && (
-        <SaveMessage>
-          <p>저장하시겠습니까?</p>
-          <div>
-            <button
-              className="yes"
-              onClick={() => {
-                setSaveConfirm(true);
-                setShowSaveMessage(false);
-              }}
-            >
-              YES
-            </button>
-            <button
-              className="no"
-              onClick={() => {
-                setShowSaveMessage(false);
-              }}
-            >
-              NO
-            </button>
-          </div>
-        </SaveMessage>
-      )}
-      {uploadedInfo?.lastModified && (
-        <button className="reset" onClick={() => setUploadedInfo(null)}>
-          RESET
-        </button>
-      )}
-      {uploadedInfo?.lastModified && (
-        <ButtonList
-          setFont={setFont}
-          setFontColor={setFontColor}
-          setTextPosition={setTextPosition}
-          setTextStyle={setTextStyle}
+        <SaveMessage
+          setSaveConfirm={setSaveConfirm}
+          setShowSaveMessage={setShowSaveMessage}
         />
+      )}
+      {uploadedInfo?.lastModified && (
+        <>
+          <ResetButton setUploadedInfo={setUploadedInfo} />
+          <StyleButtonBox
+            setFont={setFont}
+            setFontColor={setFontColor}
+            setTextPosition={setTextPosition}
+            setTextStyle={setTextStyle}
+          />
+        </>
       )}
       <label
         className={`preview${isActive ? " active" : ""}`} // isActive 값에 따라 className 제어
@@ -218,67 +200,15 @@ export default function UploadBox() {
         )}
       </label>
       {uploadedInfo && (
-        <ButtonContainer>
-          <div onClick={() => setShowSaveMessage(true)}>
-            <SaveButton text={"save"} />
-          </div>
-          <CopyToClipboard text={uploadedInfo.url}>
-            <div onClick={copyToClipboard}>
-              <SaveButton text={"copy"} />
-            </div>
-          </CopyToClipboard>
-        </ButtonContainer>
+        <SaveButtonBox
+          uploadedInfo={uploadedInfo}
+          setShowSaveMessage={setShowSaveMessage}
+          copyImage={copyImage}
+        />
       )}
     </Wrapper>
   );
 }
-
-const CopyMessage = styled.div`
-  position: fixed;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 10px;
-  background-color: rgba(0, 0, 0, 0.2);
-  color: white;
-  border-radius: 5px;
-  z-index: 999;
-`;
-
-const SaveMessage = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 30%;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 10px;
-  width: 400px;
-  height: 160px;
-  background-color: rgba(255, 255, 255, 0.8);
-  color: #000;
-  font-size: 24px;
-  border-radius: 5px;
-  z-index: 999;
-
-  div {
-    display: flex;
-    gap: 40px;
-    .yes,
-    .no {
-      width: 80px;
-      height: 40px;
-    }
-    .yes {
-      background-color: #599f6d;
-    }
-    .no {
-      background-color: #bd4030;
-    }
-  }
-`;
 
 const Wrapper = styled.div`
   display: flex;
@@ -338,43 +268,4 @@ const Wrapper = styled.div`
     font-size: 18px;
     margin: 20px 0 10px;
   }
-
-  .reset {
-    font-family: "DOSGothic";
-    background: #bd4030;
-    box-shadow: 0px 5px 0px 0px #962b1f;
-
-    display: block;
-    position: relative;
-    float: left;
-    width: 60px;
-    height: 50px;
-    padding: 0;
-    margin: 10px 20px 10px 0;
-    text-align: center;
-    font-size: 18px;
-
-    color: #f3f3f3;
-    border-radius: 50%;
-    transition: all 0.2s;
-
-    cursor: pointer;
-
-    &:hover {
-      margin-top: 12px;
-      margin-bottom: 8px;
-      box-shadow: 0px 4px 0px 0px #962b1f;
-    }
-
-    &:active {
-      margin-top: 15px;
-      margin-bottom: 5px;
-      box-shadow: 0px 0px 0px 0px #962b1f;
-    }
-  }
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  gap: 30px;
 `;

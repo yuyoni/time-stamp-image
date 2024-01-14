@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import StyleButton from "./StyleButton";
 
-export default function ButtonList({
+export default function StyleButtonBox({
   setTextStyle,
   setTextPosition,
   setFontColor,
@@ -12,12 +12,12 @@ export default function ButtonList({
       <Container>
         <StyleButton
           name={"oneline"}
-          buttontext={"oneline"}
+          buttontext={"한줄"}
           setter={() => setTextStyle("oneline")}
         />
         <StyleButton
           name={"twoline"}
-          buttontext={"twoline"}
+          buttontext={"두줄"}
           setter={() => setTextStyle("twoline")}
         />
         <StyleButton

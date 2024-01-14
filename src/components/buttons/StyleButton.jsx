@@ -46,7 +46,7 @@ const Wrapper = styled.div`
       box-shadow: 0px 4px 0px 0px #000000;
     }
     &:active {
-      box-shadow: 0px 0px 0px 0px #000000;
+      box-shadow: 0px -2px 0px 0px #000000;
     }
   }
   .white {
@@ -58,7 +58,7 @@ const Wrapper = styled.div`
       box-shadow: 0px 4px 0px 0px #b2b2b2;
     }
     &:active {
-      box-shadow: 0px 0px 0px 0px #b2b2b2;
+      box-shadow: 0px -2px 0px 0px #b2b2b2;
     }
   }
 
@@ -72,7 +72,7 @@ const Wrapper = styled.div`
       box-shadow: 0px 4px 0px 0px #346457;
     }
     &:active {
-      box-shadow: 0px 0px 0px 0px #346457;
+      box-shadow: 0px -2px 0px 0px #346457;
     }
   }
 
@@ -86,7 +86,7 @@ const Wrapper = styled.div`
       box-shadow: 0px 4px 0px 0px #382c39;
     }
     &:active {
-      box-shadow: 0px 0px 0px 0px #382c39;
+      box-shadow: 0px -2px 0px 0px #382c39;
     }
   }
 
@@ -99,7 +99,7 @@ const Wrapper = styled.div`
       box-shadow: 0px 4px 0px 0px #962b1f;
     }
     &:active {
-      box-shadow: 0px 0px 0px 0px #962b1f;
+      box-shadow: 0px -2px 0px 0px #962b1f;
     }
   }
   .DNFBitBitv2 {
@@ -111,7 +111,7 @@ const Wrapper = styled.div`
       box-shadow: 0px 4px 0px 0px #be8617;
     }
     &:active {
-      box-shadow: 0px 0px 0px 0px #be8617;
+      box-shadow: 0px -2px 0px 0px #be8617;
     }
   }
   .DOSGothic {
@@ -123,7 +123,7 @@ const Wrapper = styled.div`
       box-shadow: 0px 4px 0px 0px #5a6b17;
     }
     &:active {
-      box-shadow: 0px 0px 0px 0px #5a6b17;
+      box-shadow: 0px -2px 0px 0px #5a6b17;
     }
   }
 `;
