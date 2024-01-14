@@ -12,9 +12,6 @@ export default function UploadBox() {
 
   useEffect(() => {
     if (uploadedInfo) {
-      // 날짜 변환
-      const date = formatTimestamp(uploadedInfo.lastModified);
-
       // 이미지 그리기
       const img = new Image();
       img.src = uploadedInfo.url;
@@ -29,17 +26,20 @@ export default function UploadBox() {
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
         // 텍스트 그리기
+        if (uploadedInfo.lastModified) {
+          // 날짜 변환
+          const date = formatTimestamp(uploadedInfo.lastModified);
+          // 폰트 크기 계산
+          const fontSize = canvas.width * 0.05;
 
-        // 폰트 크기 계산
-        const fontSize = canvas.width * 0.05;
+          // 텍스트 위치 계산
+          const textX = canvas.width * 0.1;
+          const textY = canvas.height * 0.9;
 
-        // 텍스트 위치 계산
-        const textX = canvas.width * 0.1;
-        const textY = canvas.height * 0.9;
-
-        ctx.fillStyle = "white";
-        ctx.font = `${fontSize}px Arial`;
-        ctx.fillText(date, textX, textY);
+          ctx.fillStyle = "white";
+          ctx.font = `${fontSize}px Arial`;
+          ctx.fillText(date, textX, textY);
+        }
       };
     }
   }, [uploadedInfo]);
