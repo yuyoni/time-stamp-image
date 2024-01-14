@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function Button() {
+export default function Button({ text }) {
   return (
     <Wrapper>
       <div className="button__content">
-        <p className="button__text">save</p>
+        <p className="button__text">{text}</p>
       </div>
     </Wrapper>
   );

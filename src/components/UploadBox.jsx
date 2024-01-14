@@ -3,6 +3,7 @@ import styled from "styled-components";
 import imgfile from "../assets/imgfile.png";
 import formatTimestamp from "../utils/formatTimestamp";
 import Button from "./Button";
+import CopyToClipboard from "react-copy-to-clipboard";
 
 export default function UploadBox() {
   const [isActive, setActive] = useState(false);
@@ -89,6 +90,28 @@ export default function UploadBox() {
     a.click();
   };
 
+  // 캔버스 blob객체를 생성한 후 url을 클립보드에 복사하는 함수
+  const copyToClipboard = () => {
+    const canvas = canvasRef.current;
+    canvas.toBlob((blob) => {
+      const clipboardData = new ClipboardItem({ "image/png": blob });
+      navigator.clipboard.write([clipboardData]);
+    });
+  };
+
+  // 클립보드에서 파일 가져와서 처리
+  const handleClipboardChange = async (event) => {
+    const items = event.clipboardData.items;
+
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      if (item.type.indexOf("image") !== -1) {
+        const blob = await item.getAsFile();
+        setFileInfo(blob);
+      }
+    }
+  };
+
   return (
     <Wrapper>
       <label
@@ -97,6 +120,7 @@ export default function UploadBox() {
         onDragOver={handleDragOver}
         onDragLeave={handleDragEnd}
         onDrop={handleDrop}
+        onPaste={handleClipboardChange}
       >
         <input
           ref={imgRef}
@@ -120,11 +144,20 @@ export default function UploadBox() {
           </>
         )}
       </label>
-      {uploadedInfo && (
-        <div onClick={saveImage}>
-          <Button />
-        </div>
-      )}
+      <ButtonContainer>
+        {uploadedInfo && (
+          <div onClick={saveImage}>
+            <Button text={"save"} />
+          </div>
+        )}
+        {uploadedInfo && (
+          <CopyToClipboard text={uploadedInfo.url}>
+            <div onClick={copyToClipboard}>
+              <Button text={"copy"} />
+            </div>
+          </CopyToClipboard>
+        )}
+      </ButtonContainer>
     </Wrapper>
   );
 }
@@ -188,4 +221,9 @@ const Wrapper = styled.div`
     font-size: 18px;
     margin: 20px 0 10px;
   }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 30px;
 `;
