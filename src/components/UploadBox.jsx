@@ -11,15 +11,13 @@ export default function UploadBox() {
   const [font, setFont] = useState("GmarketSansMedium");
   const [fontColor, setFontColor] = useState("white");
   const [textPosition, setTextPosition] = useState("bottom");
+  const [textStyle, setTextStyle] = useState("twoline");
 
   const imgRef = useRef();
   const canvasRef = useRef(null);
 
   useEffect(() => {
     if (uploadedInfo) {
-      // 날짜 변환
-      const date = formatTimestamp(uploadedInfo.lastModified);
-
       // 이미지 그리기
       const img = new Image();
       img.src = uploadedInfo.url;
@@ -35,30 +33,13 @@ export default function UploadBox() {
 
         // 텍스트 그리기
 
+        // 날짜 변환
+        const date = formatTimestamp(uploadedInfo.lastModified);
+
         // 폰트 크기 계산
         const fontSize = canvas.width * 0.05;
 
-        let textX, textY;
-        // 텍스트 위치 계산
-        switch (textPosition) {
-          case "top": {
-            textX = canvas.width * 0.1;
-            textY = canvas.height * 0.15;
-            // 여기서 textX와 textY를 사용하여 작업 수행
-            break;
-          }
-          case "bottom": {
-            textX = canvas.width * 0.1;
-            textY = canvas.height * 0.85;
-            // 여기서 textX와 textY를 사용하여 작업 수행
-            break;
-          }
-          default: {
-            textX = canvas.width * 0.1;
-            textY = canvas.height * 0.9;
-          }
-        }
-
+        // 폰트 스타일
         ctx.fillStyle = fontColor;
         ctx.font = `${fontSize}px ${font}`;
         ctx.shadowColor = `${
@@ -70,10 +51,67 @@ export default function UploadBox() {
         ctx.shadowOffsetX = 1;
         ctx.shadowOffsetY = 1;
 
-        ctx.fillText(date, textX, textY);
+        // 폰트 위치
+        let textX, textY;
+        let result;
+
+        switch (textStyle) {
+          case "twoline": {
+            const lineheight = fontSize * 1.2;
+
+            switch (textPosition) {
+              case "top": {
+                textX = canvas.width * 0.1;
+                textY = canvas.height * 0.1 + lineheight;
+                break;
+              }
+              case "bottom": {
+                textX = canvas.width * 0.1;
+                textY = canvas.height * 0.9 - lineheight;
+                break;
+              }
+              default: {
+                textX = canvas.width * 0.1;
+                textY = canvas.height * 0.9;
+              }
+            }
+            result = date[1].split("\n");
+            for (let i = 0; i < result.length; i++) {
+              ctx.fillText(result[i], textX, textY + i * lineheight);
+            }
+            break;
+          }
+          default: {
+            // 텍스트 위치 계산
+            switch (textPosition) {
+              case "top": {
+                textX = canvas.width * 0.1;
+                textY = canvas.height * 0.15;
+                // 여기서 textX와 textY를 사용하여 작업 수행
+                break;
+              }
+              case "bottom": {
+                textX = canvas.width * 0.1;
+                textY = canvas.height * 0.85;
+                // 여기서 textX와 textY를 사용하여 작업 수행
+                break;
+              }
+              default: {
+                textX = canvas.width * 0.1;
+                textY = canvas.height * 0.9;
+              }
+            }
+            result = date[0].split("\n");
+            for (let i = 0; i < result.length; i++) {
+              ctx.fillText(result[i], textX, textY);
+            }
+          }
+        }
+
+        // ctx.fillText(date[1], textX, textY);
       };
     }
-  }, [uploadedInfo, font, fontColor, textPosition]);
+  }, [uploadedInfo, font, fontColor, textPosition, textStyle]);
 
   // 드래그 앤 드롭을 제어하는 함수들
   const handleDragStart = () => setActive(true);
@@ -147,6 +185,12 @@ export default function UploadBox() {
       {uploadedInfo?.lastModified && (
         <FontStyleContainer>
           <ColorContainer>
+            <button className="oneline" onClick={() => setTextStyle("oneline")}>
+              oneline
+            </button>
+            <button className="twoline" onClick={() => setTextStyle("twoline")}>
+              twoline
+            </button>
             <button className="top" onClick={() => setTextPosition("top")}>
               top
             </button>
@@ -292,8 +336,8 @@ const ColorContainer = styled.div`
       box-shadow: 0px 0px 0px 0px #b2b2b2;
     }
   }
-  .top,
-  .bottom {
+  .oneline,
+  .twoline {
     background-color: #599f8c;
     color: white;
     box-shadow: 0px 5px 0px 0px #346457;
@@ -303,6 +347,20 @@ const ColorContainer = styled.div`
     }
     &:active {
       box-shadow: 0px 0px 0px 0px #346457;
+    }
+  }
+
+  .top,
+  .bottom {
+    background-color: #563e58;
+    color: white;
+    box-shadow: 0px 5px 0px 0px #382c39;
+
+    &:hover {
+      box-shadow: 0px 4px 0px 0px #382c39;
+    }
+    &:active {
+      box-shadow: 0px 0px 0px 0px #382c39;
     }
   }
 `;
