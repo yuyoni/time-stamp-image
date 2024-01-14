@@ -3,8 +3,7 @@
 https://timestamp-image.netlify.app/
 
 ## ** 프로젝트 개요**
-사진의 정보(날짜 및 시간)을 사진에 오버레이해서 저장할 수 있는 웹 사이트
-드래그 앤 드롭 이미지 첨부 기능과 클립보드 복사 붙여넣기 기능을 이용해 더 편리하게 사용할 수 있음
+사진의 정보(날짜 및 시간)을 사진에 오버레이해서 저장할 수 있는 웹 사이트로, 드래그 앤 드롭 이미지 첨부 기능과 클립보드 복사 붙여넣기 기능을 이용해 더 편리하게 사용할 수 있음
 
 ## ** 사용 기술 및 라이브러리 ** 
 <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/StyledComponents-DB7093?style=flat-square&logo=StyledComponents&logoColor=white"/> react-copy-to-clipboard
