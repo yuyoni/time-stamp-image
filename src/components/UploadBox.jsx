@@ -9,6 +9,8 @@ export default function UploadBox() {
   const [isActive, setActive] = useState(false);
   const [uploadedInfo, setUploadedInfo] = useState(null);
   const [font, setFont] = useState("GmarketSansMedium");
+  const [fontColor, setFontColor] = useState("white");
+
   const imgRef = useRef();
   const canvasRef = useRef(null);
 
@@ -39,17 +41,21 @@ export default function UploadBox() {
         const textX = canvas.width * 0.1;
         const textY = canvas.height * 0.9;
 
-        ctx.fillStyle = "white";
+        ctx.fillStyle = fontColor;
         ctx.font = `${fontSize}px ${font}`;
-        ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
-        ctx.shadowBlur = 5;
-        ctx.shadowOffsetX = 20;
-        ctx.shadowOffsetY = 20;
+        ctx.shadowColor = `${
+          fontColor === "white"
+            ? "rgba(0, 0, 0, 0.5)"
+            : "rgba(255, 255, 255, 0.8)"
+        }`;
+        ctx.shadowBlur = 2;
+        ctx.shadowOffsetX = 1;
+        ctx.shadowOffsetY = 1;
 
         ctx.fillText(date, textX, textY);
       };
     }
-  }, [uploadedInfo, font]);
+  }, [uploadedInfo, font, fontColor]);
 
   // 드래그 앤 드롭을 제어하는 함수들
   const handleDragStart = () => setActive(true);
@@ -121,23 +127,33 @@ export default function UploadBox() {
   return (
     <Wrapper>
       {uploadedInfo?.lastModified && (
-        <FontContainer>
-          <button
-            className="GmarketSans"
-            onClick={() => setFont("GmarketSansMedium")}
-          >
-            폰트1
-          </button>
-          <button
-            className="DNFBitBitv2"
-            onClick={() => setFont("DNFBitBitv2")}
-          >
-            폰트2
-          </button>
-          <button className="DOSGothic" onClick={() => setFont("DOSGothic")}>
-            폰트3
-          </button>
-        </FontContainer>
+        <FontStyleContainer>
+          <ColorContainer>
+            <button className="black" onClick={() => setFontColor("black")}>
+              black
+            </button>
+            <button className="white" onClick={() => setFontColor("white")}>
+              white
+            </button>
+          </ColorContainer>
+          <FontContainer>
+            <button
+              className="GmarketSans"
+              onClick={() => setFont("GmarketSansMedium")}
+            >
+              폰트1
+            </button>
+            <button
+              className="DNFBitBitv2"
+              onClick={() => setFont("DNFBitBitv2")}
+            >
+              폰트2
+            </button>
+            <button className="DOSGothic" onClick={() => setFont("DOSGothic")}>
+              폰트3
+            </button>
+          </FontContainer>
+        </FontStyleContainer>
       )}
       <label
         className={`preview${isActive ? " active" : ""}`} // isActive 값에 따라 className 제어
@@ -169,37 +185,26 @@ export default function UploadBox() {
           </>
         )}
       </label>
-      <ButtonContainer>
-        {uploadedInfo && (
+      {uploadedInfo && (
+        <ButtonContainer>
           <div onClick={saveImage}>
             <Button text={"save"} />
           </div>
-        )}
-        {uploadedInfo && (
           <CopyToClipboard text={uploadedInfo.url}>
             <div onClick={copyToClipboard}>
               <Button text={"copy"} />
             </div>
           </CopyToClipboard>
-        )}
-      </ButtonContainer>
+        </ButtonContainer>
+      )}
     </Wrapper>
   );
 }
 
-const FontContainer = styled.div`
+const FontStyleContainer = styled.div`
   display: flex;
-  gap: 10px;
-
-  .GmarketSans {
-    font-family: "GmarketSansMedium";
-  }
-  .DNFBitBitv2 {
-    font-family: "DNFBitBitv2";
-  }
-  .DOSGothic {
-    font-family: "DOSGothic";
-  }
+  flex-direction: column;
+  margin: 10px;
 
   button {
     display: block;
@@ -210,23 +215,88 @@ const FontContainer = styled.div`
     margin: 10px 20px 10px 0;
     text-align: center;
     line-height: 40px;
-    background: #00ae68;
+
     color: #fff;
     border-radius: 5px;
     transition: all 0.2s;
-    box-shadow: 0px 5px 0px 0px #007144;
+
     cursor: pointer;
 
     &:hover {
       margin-top: 12px;
       margin-bottom: 8px;
-      box-shadow: 0px 4px 0px 0px #007144;
     }
 
     &:active {
       margin-top: 15px;
       margin-bottom: 5px;
-      box-shadow: 0px 0px 0px 0px #007144;
+    }
+  }
+`;
+const ColorContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+
+  .black {
+    color: black;
+  }
+  .white {
+    color: white;
+  }
+
+  button {
+    background: #599f8c;
+    box-shadow: 0px 5px 0px 0px #386358;
+    font-family: "GmarketSansMedium";
+
+    &:hover {
+      box-shadow: 0px 4px 0px 0px #386358;
+    }
+    &:active {
+      box-shadow: 0px 0px 0px 0px #386358;
+    }
+  }
+`;
+const FontContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+
+  .GmarketSans {
+    font-family: "GmarketSansMedium";
+    background: #bd4030;
+    box-shadow: 0px 5px 0px 0px #962b1f;
+
+    &:hover {
+      box-shadow: 0px 4px 0px 0px #962b1f;
+    }
+    &:active {
+      box-shadow: 0px 0px 0px 0px #962b1f;
+    }
+  }
+  .DNFBitBitv2 {
+    font-family: "DNFBitBitv2";
+    background: #e0b83e;
+    box-shadow: 0px 5px 0px 0px #be8617;
+
+    &:hover {
+      box-shadow: 0px 4px 0px 0px #be8617;
+    }
+    &:active {
+      box-shadow: 0px 0px 0px 0px #be8617;
+    }
+  }
+  .DOSGothic {
+    font-family: "DOSGothic";
+    background: #7f9626;
+    box-shadow: 0px 5px 0px 0px #5a6b17;
+
+    &:hover {
+      box-shadow: 0px 4px 0px 0px #5a6b17;
+    }
+    &:active {
+      box-shadow: 0px 0px 0px 0px #5a6b17;
     }
   }
 `;
