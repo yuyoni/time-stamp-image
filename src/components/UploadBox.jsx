@@ -8,6 +8,7 @@ import CopyToClipboard from "react-copy-to-clipboard";
 export default function UploadBox() {
   const [isActive, setActive] = useState(false);
   const [uploadedInfo, setUploadedInfo] = useState(null);
+  const [font, setFont] = useState("GmarketSansMedium");
   const imgRef = useRef();
   const canvasRef = useRef(null);
 
@@ -39,16 +40,16 @@ export default function UploadBox() {
         const textY = canvas.height * 0.9;
 
         ctx.fillStyle = "white";
-        ctx.font = `${fontSize}px GmarketSansMedium`;
+        ctx.font = `${fontSize}px ${font}`;
         ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
         ctx.shadowBlur = 5;
-        ctx.shadowOffsetX = 2;
-        ctx.shadowOffsetY = 2;
+        ctx.shadowOffsetX = 20;
+        ctx.shadowOffsetY = 20;
 
         ctx.fillText(date, textX, textY);
       };
     }
-  }, [uploadedInfo]);
+  }, [uploadedInfo, font]);
 
   // 드래그 앤 드롭을 제어하는 함수들
   const handleDragStart = () => setActive(true);
@@ -119,6 +120,25 @@ export default function UploadBox() {
 
   return (
     <Wrapper>
+      {uploadedInfo?.lastModified && (
+        <FontContainer>
+          <button
+            className="GmarketSans"
+            onClick={() => setFont("GmarketSansMedium")}
+          >
+            폰트1
+          </button>
+          <button
+            className="DNFBitBitv2"
+            onClick={() => setFont("DNFBitBitv2")}
+          >
+            폰트2
+          </button>
+          <button className="DOSGothic" onClick={() => setFont("DOSGothic")}>
+            폰트3
+          </button>
+        </FontContainer>
+      )}
       <label
         className={`preview${isActive ? " active" : ""}`} // isActive 값에 따라 className 제어
         onDragEnter={handleDragStart}
@@ -166,6 +186,50 @@ export default function UploadBox() {
     </Wrapper>
   );
 }
+
+const FontContainer = styled.div`
+  display: flex;
+  gap: 10px;
+
+  .GmarketSans {
+    font-family: "GmarketSansMedium";
+  }
+  .DNFBitBitv2 {
+    font-family: "DNFBitBitv2";
+  }
+  .DOSGothic {
+    font-family: "DOSGothic";
+  }
+
+  button {
+    display: block;
+    position: relative;
+    float: left;
+    width: 80px;
+    padding: 0;
+    margin: 10px 20px 10px 0;
+    text-align: center;
+    line-height: 40px;
+    background: #00ae68;
+    color: #fff;
+    border-radius: 5px;
+    transition: all 0.2s;
+    box-shadow: 0px 5px 0px 0px #007144;
+    cursor: pointer;
+
+    &:hover {
+      margin-top: 12px;
+      margin-bottom: 8px;
+      box-shadow: 0px 4px 0px 0px #007144;
+    }
+
+    &:active {
+      margin-top: 15px;
+      margin-bottom: 5px;
+      box-shadow: 0px 0px 0px 0px #007144;
+    }
+  }
+`;
 
 const Wrapper = styled.div`
   display: flex;
