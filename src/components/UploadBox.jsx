@@ -195,7 +195,7 @@ export default function UploadBox() {
         ) : (
           <>
             <img className="img-icon" src={imgfile} alt="img-icon" />
-            <p className="preview_msg">Click or Drop Image</p>
+            <p className="preview_msg">Click, Drop or Paste Image</p>
           </>
         )}
       </label>
