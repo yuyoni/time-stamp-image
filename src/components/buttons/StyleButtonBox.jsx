@@ -45,7 +45,7 @@ export default function StyleButtonBox({
         <StyleButton
           name={"GmarketSans"}
           buttontext={"폰트1"}
-          setter={() => setFont("GmarketSans")}
+          setter={() => setFont("GmarketSansMedium")}
         />
         <StyleButton
           name={"DNFBitBitv2"}
