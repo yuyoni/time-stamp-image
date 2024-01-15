@@ -52,6 +52,7 @@ const Wrapper = styled.div`
     .no {
       width: 80px;
       height: 40px;
+      color: #f3f3f3;
     }
     .yes {
       background-color: #599f6d;
