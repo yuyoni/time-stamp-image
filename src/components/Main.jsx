@@ -10,7 +10,7 @@ import UploadBox from "./uploadbox/UploadBox";
 import CustomDateButton from "./buttons/CustomDateButton";
 
 export default function Main() {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const [uploadedInfo, setUploadedInfo] = useState(null);
 
@@ -26,7 +26,15 @@ export default function Main() {
 
   const canvasRef = useRef(null);
 
-  useDraw(uploadedInfo, canvasRef, fontColor, font, textStyle, textPosition);
+  useDraw(
+    uploadedInfo,
+    canvasRef,
+    fontColor,
+    font,
+    textStyle,
+    textPosition,
+    selectedDate
+  );
 
   return (
     <Container>

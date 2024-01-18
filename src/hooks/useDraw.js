@@ -8,7 +8,8 @@ export default function useDraw(
   fontColor,
   font,
   textStyle,
-  textPosition
+  textPosition,
+  selectedDate
 ) {
   useEffect(() => {
     if (uploadedInfo) {
@@ -27,9 +28,6 @@ export default function useDraw(
 
         /* 텍스트 그리기 */
 
-        // 날짜 변환
-        const date = formatTimestamp(uploadedInfo.lastModified);
-
         // 폰트 크기 계산
         const fontSize = canvas.width * 0.05;
 
@@ -45,7 +43,16 @@ export default function useDraw(
         ctx.shadowOffsetX = 1;
         ctx.shadowOffsetY = 1;
 
-        // 폰트 위치 계산
+        // 날짜 변환
+        let date;
+
+        if (selectedDate) {
+          console.log(selectedDate);
+          const timestamp = new Date(selectedDate).getTime();
+          date = formatTimestamp(timestamp);
+        } else {
+          date = formatTimestamp(uploadedInfo.lastModified);
+        }
         calculateTextPosition(
           textStyle,
           fontSize,
@@ -56,5 +63,13 @@ export default function useDraw(
         );
       };
     }
-  }, [canvasRef, uploadedInfo, font, fontColor, textPosition, textStyle]);
+  }, [
+    canvasRef,
+    uploadedInfo,
+    font,
+    fontColor,
+    textPosition,
+    textStyle,
+    selectedDate,
+  ]);
 }
