@@ -10,6 +10,8 @@ import UploadBox from "./uploadbox/UploadBox";
 import CustomDateButton from "./buttons/CustomDateButton";
 
 export default function Main() {
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
   const [uploadedInfo, setUploadedInfo] = useState(null);
 
   const [font, setFont] = useState("GmarketSansMedium");
@@ -38,7 +40,10 @@ export default function Main() {
         uploadedInfo={uploadedInfo}
         setUploadedInfo={setUploadedInfo}
       />
-      <CustomDateButton />
+      <CustomDateButton
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+      />
       <UploadBox
         uploadedInfo={uploadedInfo}
         setUploadedInfo={setUploadedInfo}
