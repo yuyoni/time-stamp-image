@@ -41,6 +41,7 @@ export default function Main() {
         setUploadedInfo={setUploadedInfo}
       />
       <CustomDateButton
+        uploadedInfo={uploadedInfo}
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
       />
