@@ -1,29 +1,35 @@
 import styled from "styled-components";
 
-export default function SaveMessage({ setSaveConfirm, setShowSaveMessage }) {
+export default function SaveMessage({
+  setSaveConfirm,
+  showSaveMessage,
+  setShowSaveMessage,
+}) {
   return (
-    <Wrapper>
-      <p>저장하시겠습니까?</p>
-      <div>
-        <button
-          className="yes"
-          onClick={() => {
-            setSaveConfirm(true);
-            setShowSaveMessage(false);
-          }}
-        >
-          YES
-        </button>
-        <button
-          className="no"
-          onClick={() => {
-            setShowSaveMessage(false);
-          }}
-        >
-          NO
-        </button>
-      </div>
-    </Wrapper>
+    showSaveMessage && (
+      <Wrapper>
+        <p>저장하시겠습니까?</p>
+        <div>
+          <button
+            className="yes"
+            onClick={() => {
+              setSaveConfirm(true);
+              setShowSaveMessage(false);
+            }}
+          >
+            YES
+          </button>
+          <button
+            className="no"
+            onClick={() => {
+              setShowSaveMessage(false);
+            }}
+          >
+            NO
+          </button>
+        </div>
+      </Wrapper>
+    )
   );
 }
 

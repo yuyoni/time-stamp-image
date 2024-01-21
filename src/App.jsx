@@ -1,11 +1,11 @@
 import GlobalStyle from "./GlobalStyle";
-import UploadBox from "./components/UploadBox";
+import Main from "./components/Main";
 
 function App() {
   return (
     <div className="App">
       <GlobalStyle />
-      <UploadBox />
+      <Main />
     </div>
   );
 }

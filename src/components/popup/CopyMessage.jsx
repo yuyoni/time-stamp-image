@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-export default function CopyMessage() {
-  return <Wrapper>클립보드에 복사되었습니다.</Wrapper>;
+export default function CopyMessage({ showCopyMessage }) {
+  return showCopyMessage && <Wrapper>클립보드에 복사되었습니다.</Wrapper>;
 }
 
 const Wrapper = styled.div`
