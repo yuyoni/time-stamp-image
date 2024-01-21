@@ -27,11 +27,15 @@ export default function UploadBox({
   // 파일 정보를 세팅하는 함수
   const setFileInfo = (file) => {
     const { name, size, type, lastModified } = file;
-    const formattedSize = (size / (1024 * 1024)).toFixed(2) + "mb";
-    const url = URL.createObjectURL(file);
-    const fileInfo = { name, formattedSize, type, lastModified, url };
+    if (type.includes("image")) {
+      const formattedSize = (size / (1024 * 1024)).toFixed(2) + "mb";
+      const url = URL.createObjectURL(file);
+      const fileInfo = { name, formattedSize, type, lastModified, url };
 
-    setUploadedInfo(fileInfo);
+      setUploadedInfo(fileInfo);
+    } else {
+      alert("사진만 올려주세요...");
+    }
   };
 
   // 파일 업로드 함수
