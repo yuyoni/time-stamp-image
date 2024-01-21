@@ -81,7 +81,7 @@ const Container = styled.div`
   display: grid;
   grid-template-areas:
     ". reset stylebuttons"
-    "datebutton uploadbox  stylebuttons"
+    "date-picker uploadbox  stylebuttons"
     ". savebuttons stylebuttons";
   justify-content: center;
   align-items: center;
