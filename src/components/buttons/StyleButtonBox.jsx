@@ -8,40 +8,39 @@ export default function StyleButtonBox({
   setFontColor,
   setFont,
 }) {
+  const buttonData = [
+    {
+      name: "oneline",
+      buttontext: "한줄",
+      setter: () => setTextStyle("oneline"),
+    },
+    {
+      name: "twoline",
+      buttontext: "두줄",
+      setter: () => setTextStyle("twoline"),
+    },
+    { name: "top", buttontext: "top", setter: () => setTextPosition("top") },
+    {
+      name: "bottom",
+      buttontext: "bottom",
+      setter: () => setTextPosition("bottom"),
+    },
+    { name: "black", buttontext: "black", setter: () => setFontColor("black") },
+    { name: "white", buttontext: "white", setter: () => setFontColor("white") },
+  ];
+
   return (
     uploadedInfo && (
       <Wrapper>
         <Container>
-          <StyleButton
-            name={"oneline"}
-            buttontext={"한줄"}
-            setter={() => setTextStyle("oneline")}
-          />
-          <StyleButton
-            name={"twoline"}
-            buttontext={"두줄"}
-            setter={() => setTextStyle("twoline")}
-          />
-          <StyleButton
-            name={"top"}
-            buttontext={"top"}
-            setter={() => setTextPosition("top")}
-          />
-          <StyleButton
-            name={"bottom"}
-            buttontext={"bottom"}
-            setter={() => setTextPosition("bottom")}
-          />
-          <StyleButton
-            name={"black"}
-            buttontext={"black"}
-            setter={() => setFontColor("black")}
-          />
-          <StyleButton
-            name={"white"}
-            buttontext={"white"}
-            setter={() => setFontColor("white")}
-          />
+          {buttonData.map((button, index) => (
+            <StyleButton
+              key={index}
+              name={button.name}
+              buttontext={button.buttontext}
+              setter={button.setter}
+            />
+          ))}
         </Container>
         <Container>
           <StyleButton
